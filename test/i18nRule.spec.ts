@@ -67,7 +67,7 @@ describe('i18n', () => {
       const source = `
       @Component({
         template: \`
-          <div i18n="@@foo">Text</div>
+          <div i18n="a@@foo">Text</div>
         \`
       })
       class Bar {}
