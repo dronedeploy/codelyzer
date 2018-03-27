@@ -24,6 +24,16 @@ class I18NAttrVisitor extends BasicTemplateAstVisitor implements ConfigurableVis
           )
         );
       }
+      if (parts[0].length === 0) {
+        const span = attr.sourceSpan;
+        context.addFailure(
+          context.createFailure(
+            span.start.offset,
+            span.end.offset - span.start.offset,
+            'Missing title+description for i18n attribute i18n="title|description@@customLabel"'
+          )
+        );
+      }
     }
     super.visitAttr(attr, context);
   }
