@@ -13,26 +13,17 @@ interface ConfigurableVisitor {
 class I18NAttrVisitor extends BasicTemplateAstVisitor implements ConfigurableVisitor {
   visitAttr(attr: ast.AttrAst, context: BasicTemplateAstVisitor) {
     if (attr.name === 'i18n') {
-      const parts = (attr.value || '').split('@@');
-      if (parts.length <= 1 || parts[1].length === 0) {
+      if ((attr.value || '').includes('@@')) {
         const span = attr.sourceSpan;
-        context.addFailure(
-          context.createFailure(
-            span.start.offset,
-            span.end.offset - span.start.offset,
-            'Missing custom message identifier. For more information visit https://angular.io/guide/i18n'
-          )
-        );
-      }
-      if (parts[0].length === 0) {
-        const span = attr.sourceSpan;
-        context.addFailure(
-          context.createFailure(
-            span.start.offset,
-            span.end.offset - span.start.offset,
-            'Missing title+description for i18n attribute i18n="title|description@@customLabel"'
-          )
-        );
+        if (Date.now() > 1525133345000) {
+          context.addFailure(
+            context.createFailure(
+              span.start.offset,
+              span.end.offset - span.start.offset,
+              'No @@ labels allowed. If before May 2018'
+            )
+          );
+        }
       }
     }
     super.visitAttr(attr, context);
